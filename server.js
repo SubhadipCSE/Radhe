@@ -7,7 +7,7 @@ const client = twilio(
   process.env.TWILIO_ACCOUNT_SID,
   process.env.TWILIO_AUTH_TOKEN
 );
-
+//  thjjfvhdc
 app.use(express.json());
 app.use(express.static('public'));
 
@@ -17,12 +17,13 @@ app.post('/call', async (req, res) => {
   try {
     const call = await client.calls.create({
       to: to,
-      from: process.env.TWILIO_PHONE_NUMBER,
-      url: 'http://demo.twilio.com/docs/voice.xml' // TwiML for call audio
+      from: process.env.TWILIO_PHONE_NUMBER, // ✅ This must be defined
+      url: 'http://demo.twilio.com/docs/voice.xml'
     });
-//  The App
+
     res.status(200).json({ success: true, sid: call.sid });
   } catch (err) {
+    console.error('Twilio error:', err);
     res.status(500).json({ success: false, message: err.message });
   }
 });
